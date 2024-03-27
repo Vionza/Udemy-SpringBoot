@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Thymeleaf Demo</title>
+<link rel="stylesheet" th:href="@{/css/demo.css}" />
+</head>
+<body>
+Hello Word of Spring!
+<p th:text="'Student Name : '+${param.studentName}" class="funny"/>
+<p th:text="${message}">
+</body>
+</html>
