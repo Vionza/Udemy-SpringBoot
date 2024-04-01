@@ -1,5 +1,7 @@
 package com.spring.mvc.thymeleaf.model;
 
+import com.spring.mvc.thymeleaf.validation.CourseCode;
+
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -27,4 +29,7 @@ public class Customer {
 	
 	@Pattern(regexp = "^[a-zA-Z0-9]{5}", message = "only 5 digit/char")
 	private String postalCode;
+	
+	@CourseCode(value = "TEST", message = "must start with TEST")
+	private String courseCode;
 }
