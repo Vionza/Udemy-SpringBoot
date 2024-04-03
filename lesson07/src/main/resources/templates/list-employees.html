@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Employee Directory</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<h3>Employee Directory</h3>
+		<hr>
+
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+			data-bs-target="#addModal" data-bs-whatever="@getbootstrap">Add
+			New Employee</button>
+
+		<hr>
+		<table class="table table-bordered table-striped table-hover">
+			<thead class="table-dark">
+				<tr>
+					<th>Fist Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>Acction</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="listEmployee : ${employees}">
+					<td th:text="${listEmployee.firstName}" />
+					<td th:text="${listEmployee.lastName}" />
+					<td th:text="${listEmployee.email}" />
+					<td>
+						<button type="button" class="btn btn-primary"
+							data-bs-toggle="modal" data-bs-target="#editModal"
+							data-bs-whatever="@getbootstrap"
+							th:onclick="setEmployeeId([[${listEmployee}]])">update</button>
+						<!-- Cara Pertama Untuk Panggil Java Script --> <!-- <button type="button" class="btn btn-primary"
+							data-bs-toggle="modal" data-bs-target="#editModal"
+							data-bs-whatever="@getbootstrap" th:value="${listEmployee.id}"
+							name="update" onclick="copyValueToInput(this)">update</button>  -->
+						<a th:href="@{/employees/remove(id=${listEmployee.id})}"
+						class="btn btn-danger btn-sm"
+						onclick="if (!(confirm('Are you sure want to delete this employee ?'))) return false">delete
+					</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+</body>
+<footer>
+	<div class="modal fade" id="addModal" tabindex="-1"
+		aria-labelledby="addModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="addModalLabel">Add Employee</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form action="#" th:action="@{/employees/save}"
+						th:object="${employee}" method="post">
+						<div class="mb-3">
+							<label for="first-name" class="col-form-label">First
+								Name:</label> <input type="text" class="form-control" id="first-name"
+								th:field="*{firstName}">
+						</div>
+						<div class="mb-3">
+							<label for="last-name" class="col-form-label">Last Name:</label>
+							<input type="text" class="form-control" id="last-name"
+								th:field="*{lastName}">
+						</div>
+						<div class="mb-3">
+							<label for="email" class="col-form-label">Email:</label> <input
+								type="text" class="form-control" id="email" th:field="*{email}">
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Save</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal Edit -->
+	<div class="modal fade" id="editModal" tabindex="-1"
+		aria-labelledby="editModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h1 class="modal-title fs-5" id="editModalLabel">Edit Employee</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form action="#" th:action="@{/employees/save}"
+						th:object="${employee}" method="post">
+						<input type="hidden" id="employeeId" th:field="*{id}">
+						<div class="mb-3">
+							<label for="first-name" class="col-form-label">First
+								Name:</label> <input type="text" class="form-control" id="first-name"
+								th:field="*{firstName}">
+						</div>
+						<div class="mb-3">
+							<label for="last-name" class="col-form-label">Last Name:</label>
+							<input type="text" class="form-control" id="last-name"
+								th:field="*{lastName}">
+						</div>
+						<div class="mb-3">
+							<label for="email" class="col-form-label">Email:</label> <input
+								type="text" class="form-control" id="email" th:field="*{email}">
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">Close</button>
+							<button type="submit" class="btn btn-primary">Save</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</footer>
+<!-- Cara Pertama Untuk menggunakan Java Script -->
+<!-- <script type="text/javascript">
+	function copyValueToInput(button) {
+		var idEmployee = button.getAttribute('value');
+		console.log(idEmployee);
+		document.getElementById('employeeId').setAttribute('value', idEmployee);
+	}
+</script> -->
+
+<!-- Cara Kedua Menggunakan Java Script -->
+<script th:inline="javascript">
+	function setEmployeeId(idEmployee) {
+		console.log(idEmployee);
+		document.getElementById('employeeId').setAttribute('value', idEmployee.id);
+	}
+</script>
+</html>

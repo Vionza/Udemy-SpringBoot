@@ -1,8 +1,10 @@
-package com.spring.security.service;
+package com.spring.mvc.crud.service;
 
 import java.util.List;
 
-import com.spring.security.entity.Employee;
+import com.spring.mvc.crud.entity.Employee;
+
+
 
 
 public interface EmployeeService {
